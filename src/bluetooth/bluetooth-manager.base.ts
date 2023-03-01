@@ -32,7 +32,7 @@ export class BluetoothManager {
     constructor() {
         this.logger = new Logger(this);
         this.registerHandlers();
-        this.startAdvertising();
+        setTimeout(() => this.startAdvertising(), 2500);
     }
 
     private async registerHandlers() {
