@@ -1,4 +1,4 @@
-import { BluetoothManager } from "./bluetooth/bluetooth-manager.base";
+import { BluetoothManager } from "./bluetooth/bluetooth-manager";
 
 export class Application {
     private bleManager?: BluetoothManager;

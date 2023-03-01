@@ -5,7 +5,16 @@
 
 /// <reference types="node" />
 
-export type State = 'poweredOn' | 'poweredOff' | 'unauthorized' | 'unsupported' | 'unknown' | 'resetting';
+export type AdapterState = 'poweredOn' | 'poweredOff' | 'unauthorized' | 'unsupported' | 'unknown' | 'resetting';
+
+export enum EAdapterState {
+    On = "poweredOn",
+    Off = "poweredOff",
+    Unauthorized = "unauthorized",
+    Unsupported = "unsupported",
+    Unknown = "unknown",
+    Reset = "resetting",
+};
 
 export type Property = 'read' | 'write' | 'indicate' | 'notify' | 'writeWithoutResponse';
 
@@ -116,7 +125,7 @@ export interface Bleno extends NodeJS.EventEmitter {
 
     readonly rssi: number;
 
-    readonly state: State;
+    readonly state: AdapterState;
 
     disconnect(): void;
 
@@ -133,7 +142,7 @@ export interface Bleno extends NodeJS.EventEmitter {
 
     updateRssi(callback?: (err: null, rssi: number) => void): void;
 
-    on(event: 'stateChange', cb: (state: State) => void): this;
+    on(event: 'stateChange', cb: (state: AdapterState) => void): this;
     on(event: 'accept', cb: (address: string) => void): this;
     on(event: 'mtuChange', cb: (mtu: number) => void): this;
     on(event: 'disconnect', cb: (clientAddress: string) => void): this;
