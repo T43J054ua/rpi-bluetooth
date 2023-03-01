@@ -32,6 +32,7 @@ export class BluetoothManager {
     constructor() {
         this.logger = new Logger(this);
         this.registerHandlers();
+        this.startAdvertising();
     }
 
     private async registerHandlers() {
@@ -41,5 +42,10 @@ export class BluetoothManager {
     private handleStateChange(event: unknown): void {
         this.logger.info('Handling state change');
         this.logger.objectData(event);
+    }
+
+    public startAdvertising(): void {
+        this.logger.info("Starting advertisement");
+        this.bleInterface.startAdvertising("Raspberry Pi BLE");
     }
 }
