@@ -1,5 +1,5 @@
 import bleno from '@abandonware/bleno';
-import { Bleno } from 'bleno';
+import { Bleno } from './types/bleno.types';
 
 export class Logger {
     private readonly file: string;
