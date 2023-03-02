@@ -6,7 +6,7 @@ export class Logger {
 
     constructor(classInstance: InstanceType<any>) {
         console.log('initializing logger')
-        this.file = classInstance.prototype.name;
+        this.file = module.filename;
         console.log(`${this.file} logger initialized`)
     }
 
