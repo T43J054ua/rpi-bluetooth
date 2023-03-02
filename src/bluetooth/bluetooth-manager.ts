@@ -1,25 +1,35 @@
 import bleno from '@abandonware/bleno';
 import { Logger } from '../logger/logger';
-import { AdapterState, BLEEvent, Bleno, EAdapterState } from './types/bleno.types';
+import { AdapterState, BLEEvent, Bleno, EAdapterState, PrimaryService } from './types/bleno.types';
 
 export class BluetoothManager {
     private readonly logger: Logger;
     private readonly bleInterface: Bleno = bleno;
+    private readonly bleServices: PrimaryService[] = [];
     
     constructor() {
         this.logger = new Logger(this);
         this.registerInterfaceHandlers();
     }
 
-    private registerHandler(event: BLEEvent, handler: Function): void {
-        const boundHandler = handler.bind(this);
-        this.bleInterface.on(event, (eventProvidedData?: unknown) => boundHandler(eventProvidedData));
+    private readonly interfaceEventHandlerMap: Partial<Record<BLEEvent, Function>> = {
+        [BLEEvent.AdapterStateChange]: this.handleAdapterStateChange,
+        [BLEEvent.AdvertisingStart]: this.handleAdvertisingStart,
+        [BLEEvent.AdvertisingStartError]: this.handleAdvertisingStartError,
     }
 
     private async registerInterfaceHandlers(): Promise<void> {
-        this.registerHandler(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
-        this.registerHandler(BLEEvent.AdvertisingStart, this.handleAdvertisingStart);
-        this.registerHandler(BLEEvent.AdvertisingStartError, this.handleAdvertisingStartError);
+        Object.entries(this.interfaceEventHandlerMap).forEach(([event, handler]: [any, Function]) => {
+            this.registerHandler(event satisfies BLEEvent, handler);
+        });
+        // this.registerHandler(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
+        // this.registerHandler(BLEEvent.AdvertisingStart, this.handleAdvertisingStart);
+        // this.registerHandler(BLEEvent.AdvertisingStartError, this.handleAdvertisingStartError);
+    }
+
+    private registerHandler(event: BLEEvent, handler: Function): void {
+        const boundHandler = handler.bind(this);
+        this.bleInterface.on(event, (eventProvidedData?: unknown) => boundHandler(eventProvidedData));
     }
 
     private handleAdapterStateChange(state: AdapterState): void {

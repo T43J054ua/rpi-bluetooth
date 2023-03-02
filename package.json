@@ -21,7 +21,9 @@
   "homepage": "https://github.com/T43J054ua/rpi-bluetooth#readme",
   "dependencies": {
     "@abandonware/bleno": "^0.5.1-4",
-    "@types/bleno": "^0.4.2"
+    "@types/bleno": "^0.4.2",
+    "@types/uuid": "^9.0.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "typescript": "^4.9.5"
