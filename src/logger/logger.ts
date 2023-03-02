@@ -5,7 +5,9 @@ export class Logger {
     private readonly file: string;
 
     constructor(classInstance: InstanceType<any>) {
+        console.log('initializing logger')
         this.file = classInstance.name;
+        console.log(`${this.file} logger initialized`)
     }
 
     private message(level: LogLevel, messageData: any): string {
