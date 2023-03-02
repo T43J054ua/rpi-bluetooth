@@ -6,12 +6,12 @@ export class Logger {
 
     constructor(classInstance: InstanceType<any>) {
         console.log('initializing logger')
-        this.file = classInstance.name;
+        this.file = classInstance.prototype.name;
         console.log(`${this.file} logger initialized`)
     }
 
     private message(level: LogLevel, messageData: any): string {
-        return `${LogLevel} :: ${this.file} :: ${messageData}`;
+        return `${level} :: ${this.file} :: ${messageData}`;
     }
 
     public info(data: any): void {
