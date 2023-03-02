@@ -3,8 +3,8 @@ import { Logger } from '../logger/logger';
 import { AdapterState, BLEEvent, Bleno, EAdapterState } from './types/bleno.types';
 
 export class BluetoothManager {
-    private readonly bleInterface: Bleno = bleno;
     private readonly logger: Logger;
+    private readonly bleInterface: Bleno = bleno;
     
     constructor() {
         this.logger = new Logger(this);
@@ -18,6 +18,8 @@ export class BluetoothManager {
 
     private async registerInterfaceHandlers(): Promise<void> {
         this.registerHandler(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
+        this.registerHandler(BLEEvent.AdvertisingStart, this.handleAdvertisingStart);
+        this.registerHandler(BLEEvent.AdvertisingStartError, this.handleAdvertisingStartError);
     }
 
     private handleAdapterStateChange(state: AdapterState): void {
@@ -33,8 +35,17 @@ export class BluetoothManager {
         this.logger.error(`Unable to start bluetooth adapter - reason: ${state}`);
     }
 
-    public startAdvertising(): void {
-        this.logger.info("Starting advertisement");
-        this.bleInterface.startAdvertising("Raspberry Pi BLE");
+    private handleAdvertisingStart(): void {
+        this.logger.info("Starting advertisement broadcast");
     }
-}
+
+    private handleAdvertisingStartError(startError: Error): void {
+        const errorMessage = startError.message ?? JSON.stringify(startError, null, 2);
+        this.logger.error(`Error starting advertiser: ${errorMessage}`);
+        throw new Error(`Unable to start advertiser: ${errorMessage}`);
+    }
+
+    public startAdvertising(): void {
+        this.bleInterface.startAdvertising("☠️ Node Bluetooth Device ☠️");
+    }
+};

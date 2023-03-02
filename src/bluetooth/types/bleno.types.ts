@@ -16,14 +16,20 @@ export enum EAdapterState {
     Reset = "resetting",
 };
 
-export type Property = 'read' | 'write' | 'indicate' | 'notify' | 'writeWithoutResponse';
+export enum CharacteristicProperty {
+    Read = "read",
+    Write = "write",
+    Indicate = "indicate",
+    Notify = "notify",
+    WriteWithoutResponse = "writeWithoutResponse",
+}
 
 export interface CharacteristicOptions {
     uuid: string;
-    properties?: ReadonlyArray<Property> | null | undefined;
-    secure?: ReadonlyArray<Property> | null | undefined;
+    properties?: ReadonlyArray<CharacteristicProperty|`${CharacteristicProperty}`> | null | undefined;
+    secure?: ReadonlyArray<CharacteristicProperty|`${CharacteristicProperty}`> | null | undefined;
     value?: Buffer | null | undefined;
-    descriptors?: ReadonlyArray<Descriptor> | null | undefined;
+    descriptors?: ReadonlyArray<CharacteristicDescriptor> | null | undefined;
     onIndicate?: (() => void) | null | undefined;
     onNotify?: (() => void) | null | undefined;
     onReadRequest?: ((
@@ -40,12 +46,12 @@ export interface CharacteristicOptions {
     ) => void) | null | undefined;
 }
 
-export declare class Characteristic {
+export declare class BLECharacteristic {
     uuid: string;
-    properties: ReadonlyArray<Property>;
-    secure: ReadonlyArray<Property>;
+    properties: ReadonlyArray<CharacteristicProperty|`${CharacteristicProperty}`>;
+    secure: ReadonlyArray<CharacteristicProperty|`${CharacteristicProperty}`>;
     value: Buffer | null;
-    descriptors: ReadonlyArray<Descriptor>;
+    descriptors: ReadonlyArray<CharacteristicDescriptor>;
 
     constructor(options: CharacteristicOptions);
 
@@ -89,7 +95,7 @@ export interface DescriptorOptions {
     value?: Buffer | string | null | undefined;
 }
 
-export declare class Descriptor {
+export declare class CharacteristicDescriptor {
     uuid: string;
     value: Buffer;
 
@@ -100,12 +106,12 @@ export declare class Descriptor {
 
 export interface PrimaryServiceOptions {
     uuid: string;
-    characteristics?: ReadonlyArray<Characteristic> | null | undefined;
+    characteristics?: ReadonlyArray<BLECharacteristic> | null | undefined;
 }
 
 export declare class PrimaryService {
     uuid: string;
-    characteristics: ReadonlyArray<Characteristic>;
+    characteristics: ReadonlyArray<BLECharacteristic>;
 
     constructor(options: PrimaryServiceOptions);
 
@@ -113,8 +119,8 @@ export declare class PrimaryService {
 }
 
 export interface Bleno extends NodeJS.EventEmitter {
-    readonly Characteristic: typeof Characteristic;
-    readonly Descriptor: typeof Descriptor;
+    readonly Characteristic: typeof BLECharacteristic;
+    readonly Descriptor: typeof CharacteristicDescriptor;
     readonly PrimaryService: typeof PrimaryService;
 
     readonly address: string;
