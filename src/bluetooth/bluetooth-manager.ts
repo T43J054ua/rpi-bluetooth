@@ -12,7 +12,7 @@ export class BluetoothManager {
     }
 
     private registerHandler(event: BLEEvent, handler: Function): void {
-        this.bleInterface.on(event, (eventProvidedData?: unknown) => handler(eventProvidedData));
+        this.bleInterface.on(event, (eventProvidedData?: unknown) => handler(eventProvidedData).bind(this));
     }
 
     private async registerHandlers(): Promise<void> {
