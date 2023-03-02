@@ -2,16 +2,16 @@ import { LogLevel } from "./types/logger.types";
 
 
 export class Logger {
-    private readonly file: string;
+    private readonly loggedClass: string;
 
     constructor(classInstance: InstanceType<any>) {
         console.log('initializing logger')
-        this.file = module.filename;
-        console.log(`${this.file} logger initialized`)
+        this.loggedClass = classInstance.constructor.name;
+        console.log(`${this.loggedClass} logger initialized`)
     }
 
     private message(level: LogLevel, messageData: any): string {
-        return `${level} :: ${this.file} :: ${messageData}`;
+        return `${level} :: ${this.loggedClass} :: ${messageData}`;
     }
 
     public info(data: any): void {
