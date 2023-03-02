@@ -1,6 +1,6 @@
 import bleno from '@abandonware/bleno';
 import { Logger } from '../logger/logger';
-import { AdapterState, Bleno, EAdapterState } from './types/bleno.types';
+import { AdapterState, BLEEvent, Bleno, EAdapterState } from './types/bleno.types';
 
 export class BluetoothManager {
     private readonly bleInterface: Bleno = bleno;
@@ -12,11 +12,11 @@ export class BluetoothManager {
     }
 
     private async registerHandlers() {
-        this.bleInterface.on("stateChange", this.handleAdapterStateChange);
+        this.bleInterface.on(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
     }
 
     private handleAdapterStateChange(state: AdapterState): void {
-        this.logger.info('Handling state change');
+        this.logger.info('Handling adapter state change');
         this.logger.info(state);
         if(state === EAdapterState.On) {
             this.startAdvertising();

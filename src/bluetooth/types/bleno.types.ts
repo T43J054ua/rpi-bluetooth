@@ -153,3 +153,16 @@ export interface Bleno extends NodeJS.EventEmitter {
     on(event: 'servicesSetError', cb: (err: Error) => void): this;
     on(event: 'rssiUpdate', cb: (rssi: number) => void): this;
 }
+
+export enum BLEEvent {
+    AdapterStateChange = "stateChange",
+    Accept = "accept",
+    MtuChange = "mtuChange",
+    Disconnect = "disconnect",
+    AdvertisingStart = "advertisingStart",
+    AdvertisingStartError = "advertisingStartError",
+    AdapterStop = "advertisingStop",
+    ServicesSet = "servicesSet",
+    ServicesSetError = "servicesSetError",
+    RssiUpdate = "rssiUpdate",
+}
