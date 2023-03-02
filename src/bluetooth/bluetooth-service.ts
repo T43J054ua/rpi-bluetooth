@@ -1,7 +1,6 @@
-import { PrimaryService } from "bleno";
 import { Logger } from "../logger/logger";
 import { UtilityService, utilityService } from "../services/utilities/utility.service";
-import { BLECharacteristic } from "./types/bleno.types";
+import { BLECharacteristic, PrimaryService } from "./types/bleno.types";
 
 export class BluetoothService {
     private readonly utilityService: UtilityService = utilityService;
