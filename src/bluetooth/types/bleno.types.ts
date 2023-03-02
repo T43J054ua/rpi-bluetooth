@@ -152,6 +152,7 @@ export interface Bleno extends NodeJS.EventEmitter {
     on(event: 'servicesSet', cb: (err?: Error | null) => void): this;
     on(event: 'servicesSetError', cb: (err: Error) => void): this;
     on(event: 'rssiUpdate', cb: (rssi: number) => void): this;
+    on(event: `${BLEEvent}`, cb: (data?: unknown) => void): this;
 }
 
 export enum BLEEvent {

@@ -11,8 +11,12 @@ export class BluetoothManager {
         this.registerHandlers();
     }
 
-    private async registerHandlers() {
-        this.bleInterface.on(BLEEvent.AdapterStateChange, (state: AdapterState) => this.handleAdapterStateChange(state));
+    private registerHandler(event: BLEEvent, handler: Function): void {
+        this.bleInterface.on(event, (eventProvidedData?: unknown) => handler(eventProvidedData));
+    }
+
+    private async registerHandlers(): Promise<void> {
+        this.registerHandler(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
     }
 
     private handleAdapterStateChange(state: AdapterState): void {
