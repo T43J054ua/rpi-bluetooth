@@ -12,7 +12,7 @@ export class BluetoothManager {
     }
 
     private async registerHandlers() {
-        this.bleInterface.on(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
+        this.bleInterface.on(BLEEvent.AdapterStateChange, this.handleAdapterStateChange.bind(this));
     }
 
     private handleAdapterStateChange(state: AdapterState): void {
