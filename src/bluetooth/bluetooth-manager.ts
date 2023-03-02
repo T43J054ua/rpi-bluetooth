@@ -8,7 +8,7 @@ export class BluetoothManager {
     
     constructor() {
         this.logger = new Logger(this);
-        this.registerHandlers();
+        this.registerInterfaceHandlers();
     }
 
     private registerHandler(event: BLEEvent, handler: Function): void {
@@ -16,7 +16,7 @@ export class BluetoothManager {
         this.bleInterface.on(event, (eventProvidedData?: unknown) => boundHandler(eventProvidedData));
     }
 
-    private async registerHandlers(): Promise<void> {
+    private async registerInterfaceHandlers(): Promise<void> {
         this.registerHandler(BLEEvent.AdapterStateChange, this.handleAdapterStateChange);
     }
 
