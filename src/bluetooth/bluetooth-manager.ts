@@ -1,11 +1,11 @@
 import bleno from '@abandonware/bleno';
 import { Logger } from '../logger/logger';
-import { AdapterState, BLEEvent, Bleno, EAdapterState, PrimaryService } from './types/bleno.types';
+import { AdapterState, BLEEvent, Bleno, EAdapterState, GATTService } from './types/bleno.types';
 
 export class BluetoothManager {
     private readonly logger: Logger;
     private readonly bleInterface: Bleno = bleno;
-    private readonly bleServices: PrimaryService[] = [];
+    private readonly bleServices: GATTService[] = [];
     
     constructor() {
         this.logger = new Logger(this);

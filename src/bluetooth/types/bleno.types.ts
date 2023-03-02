@@ -118,6 +118,8 @@ export declare class PrimaryService {
     toString(): string;
 }
 
+export type GATTService = typeof PrimaryService;
+
 export interface Bleno extends NodeJS.EventEmitter {
     readonly Characteristic: typeof BLECharacteristic;
     readonly Descriptor: typeof CharacteristicDescriptor;
