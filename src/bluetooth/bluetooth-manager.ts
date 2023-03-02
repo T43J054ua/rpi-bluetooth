@@ -12,8 +12,8 @@ export class BluetoothManager {
     }
 
     private registerHandler(event: BLEEvent, handler: Function): void {
-        handler = handler.bind(this);
-        this.bleInterface.on(event, (eventProvidedData?: unknown) => handler(eventProvidedData));
+        const boundHandler = handler.bind(this);
+        this.bleInterface.on(event, (eventProvidedData?: unknown) => boundHandler(eventProvidedData));
     }
 
     private async registerHandlers(): Promise<void> {
